@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/Misc/MimiJson"]
+	path = Assets/Scripts/Misc/MimiJson
+	url = ../MimiJson.git
