@@ -8,7 +8,7 @@ namespace UI.Layers
         {
             LayersManager.Instance.Push<MainMenuLayer>();
 
-            LayersManager.Instance.FadeIn(2.5f, null);
+            LayersManager.Instance.FadeIn(0.5f, null);
         }
     }
 }

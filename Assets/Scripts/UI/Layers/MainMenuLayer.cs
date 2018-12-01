@@ -10,7 +10,11 @@ namespace UI.Layers
     {
         public void StartButtonClick()
         {
-
+            LayersManager.Instance.FadeOut(0.5f, () =>
+            {
+                LayersManager.Instance.Push<GameLayer>();
+                LayersManager.Instance.FadeIn(0.5f, null);
+            });
         }
     }
 }
