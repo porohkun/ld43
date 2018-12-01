@@ -18,7 +18,7 @@ TagManager:
   - Projectile
   - Player
   - Enemy
-  - 
+  - Trigger
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1048860645
+    locked: 0
+  - name: Train
+    uniqueID: 1649765267
+    locked: 0
+  - name: Enemy
+    uniqueID: 1071693265
+    locked: 0
+  - name: Player
+    uniqueID: 4119450663
+    locked: 0
+  - name: Projectile
+    uniqueID: 461272979
     locked: 0

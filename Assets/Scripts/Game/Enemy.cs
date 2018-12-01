@@ -21,6 +21,8 @@ namespace Game
         [SerializeField]
         private float _speed = 1f;
         [SerializeField]
+        private float _boardingJumpPower = 1f;
+        [SerializeField]
         private float _onBoardSpeed = 1f;
         [SerializeField]
         private float _deathJumpPower = 1f;
@@ -34,7 +36,7 @@ namespace Game
                 switch (_state)
                 {
                     case State.Normal: return _speed;
-                    case State.Boarding: return _speed;
+                    case State.Boarding: return _onBoardSpeed;
                     case State.Death: return -_speed * 2f;
                     default: return 0f;
                 }
@@ -65,13 +67,19 @@ namespace Game
                 Death();
                 bullet.Free();
             }
+            var trigger = collision.GetComponent<Trigger>();
+            if (trigger != null && trigger.Message == "boarding")
+            {
+                _state = State.Boarding;
+                _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
+            }
         }
 
         private void Death()
         {
             _state = State.Death;
             gameObject.layer = LayerMask.NameToLayer("Default");
-            _rigidBody.AddForce(_deathJumpPower * Vector2.up, ForceMode2D.Impulse);
+            _rigidBody.AddForce(_deathJumpPower * Vector2.up + _deathJumpPower * 0.4f * Random.insideUnitCircle, ForceMode2D.Impulse);
             _rigidBody.AddTorque(Random.Range(-_deathRotateSpeed, _deathRotateSpeed));
         }
 
