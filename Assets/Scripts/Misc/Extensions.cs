@@ -48,4 +48,28 @@ public static class Extensions
         return list[UnityEngine.Random.Range(0, list.Length)];
     }
 
+    public static IEnumerable<Transform> GetChilds(this Transform root)
+    {
+        for (int i = 0; i < root.childCount; i++)
+            yield return root.GetChild(i);
+    }
+
+    public static IEnumerable<T> GetChilds<T>(this Transform root) where T : Component
+    {
+        for (int i = 0; i < root.childCount; i++)
+        {
+            var child = root.GetChild(i);
+            var t = child.GetComponent<T>();
+            if (t != null)
+                yield return t;
+        }
+    }
+
+    public static T RemoveAtAndReturn<T>(this IList<T> list, int index)
+    {
+        var item = list[index];
+        list.RemoveAt(index);
+        return item;
+    }
+
 }

@@ -9,6 +9,14 @@ namespace Game
 {
     public class Item : MonoBehaviour
     {
+        public virtual void ToFront()
+        {
 
+        }
+
+        public virtual void ToBack()
+        {
+
+        }
     }
 }
