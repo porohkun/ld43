@@ -12,10 +12,20 @@ namespace UI.Layers
         private Image _progressLine;
         [SerializeField]
         private RectTransform _progressSprite;
+        [SerializeField]
+        private GameObject _startButton;
 
         public void Start()
         {
-            GameController.Instance.StartGame();
+            //GameController.Instance.StartGame();
+        }
+
+        public void FlyClick()
+        {
+            if (GameController.Instance.StartGame())
+            {
+                _startButton.SetActive(false);
+            }
         }
 
         private void Update()

@@ -34,5 +34,29 @@ namespace Game
             if (Input.GetMouseButtonDown(0))
                 GameController.Instance.PlayerShoot(_gunEndPoint.position, _gunDirection);
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            var trigger = collision.GetComponent<Trigger>();
+            if (trigger != null)
+                switch (trigger.Message)
+                {
+                    case "ship":
+                        GameController.PlayerAllowFly = true;
+                        break;
+                }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            var trigger = collision.GetComponent<Trigger>();
+            if (trigger != null)
+                switch (trigger.Message)
+                {
+                    case "ship":
+                        GameController.PlayerAllowFly = false;
+                        break;
+                }
+        }
     }
 }

@@ -32,6 +32,10 @@ namespace Game
         private float _checkPointPath = 10f;
         [SerializeField]
         private Transform _platform;
+        [SerializeField]
+        private GameObject _shipBack;
+        [SerializeField]
+        private GameObject _shipTrigger;
 
         public static Vector2 Size { get; private set; }
         public static float TrainSpeed { get; private set; }
@@ -39,6 +43,8 @@ namespace Game
         public static float EnemyBoardingSpeed => Instance._enemyBoardingSpeed - (1 - TrainSpeed) * Instance._enemySpeedOffset * 2;
         public static float EnemyOnBoardSpeed => Instance._enemyOnBoardSpeed;
         public static float CheckPointState => Instance._currentPath / Instance._checkPointPath;
+
+        public static bool PlayerAllowFly { get; set; } = true;
 
         private bool _started;
         private float _currentPath;
@@ -48,10 +54,15 @@ namespace Game
             Size = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         }
 
-        public void StartGame()
+        public bool StartGame()
         {
+            if (!PlayerAllowFly)
+                return PlayerAllowFly;
             _started = true;
+            _shipBack.SetActive(true);
+            _shipTrigger.SetActive(false);
             StartCoroutine(GameRoutine());
+            return PlayerAllowFly;
         }
 
         private IEnumerator GameRoutine()
