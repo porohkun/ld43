@@ -35,6 +35,8 @@ namespace Game
         [SerializeField]
         private GameObject _shipBack;
         [SerializeField]
+        private GameObject _platformBack;
+        [SerializeField]
         private GameObject _shipTrigger;
 
         public static Vector2 Size { get; private set; }
@@ -48,6 +50,7 @@ namespace Game
 
         private bool _started;
         private float _currentPath;
+        private Coroutine _spawnRoutine = null;
 
         private void Start()
         {
@@ -58,15 +61,16 @@ namespace Game
         {
             if (!PlayerAllowFly)
                 return PlayerAllowFly;
-            _started = true;
-            _shipBack.SetActive(true);
-            _shipTrigger.SetActive(false);
             StartCoroutine(GameRoutine());
             return PlayerAllowFly;
         }
 
         private IEnumerator GameRoutine()
         {
+            _started = true;
+            _shipBack.SetActive(true);
+            _platformBack.gameObject.SetActive(false);
+            _shipTrigger.SetActive(false);
             _currentPath = 0f;
             while (TrainSpeed < 0.3f)
             {
@@ -79,7 +83,9 @@ namespace Game
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
             }
-            StartCoroutine(SpawnRoutine());
+
+            _platform.gameObject.SetActive(false);
+            _spawnRoutine = StartCoroutine(SpawnRoutine());
             while (TrainSpeed < 1f)
             {
                 TrainSpeed += Time.deltaTime / 8f;
@@ -92,6 +98,37 @@ namespace Game
                 _currentPath += TrainSpeed * Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+            StopCoroutine(_spawnRoutine);
+
+            while (TrainSpeed > 0.3f)
+            {
+                TrainSpeed -= Time.deltaTime / 12f;
+                _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
+                yield return new WaitForEndOfFrame();
+            }
+            _platform.transform.position = Vector3.right * 23f;
+            _platform.gameObject.SetActive(true);
+            while (_platform.position.x > 5f)
+            {
+                _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
+                yield return new WaitForEndOfFrame();
+            }
+            while (TrainSpeed > 0.05f)
+            {
+                TrainSpeed -= Time.deltaTime / 12f;
+                _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
+                yield return new WaitForEndOfFrame();
+            }
+            while (_platform.position.x > 0f)
+            {
+                _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
+                yield return new WaitForEndOfFrame();
+            }
+            _platform.position = Vector3.zero;
+            TrainSpeed = 0f;
+            _shipBack.SetActive(false);
+            _platformBack.gameObject.SetActive(true);
+            _shipTrigger.SetActive(true);
         }
 
         public IEnumerator SpawnRoutine()
