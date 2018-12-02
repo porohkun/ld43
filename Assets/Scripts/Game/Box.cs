@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Box : Item
+    public class Box : ThrowableItem
     {
         [SerializeField]
         private SpriteRenderer _sprite;

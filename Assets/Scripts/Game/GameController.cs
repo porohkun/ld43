@@ -150,5 +150,13 @@ namespace Game
             bullet.Direction = direction.normalized;
             bullet.Launch();
         }
+
+        public void PlayerThrow(Item item, Vector3 direction)
+        {
+            item.transform.parent = _projectileRoot;
+            item.Direction = direction.normalized;
+            item.Launch();
+        }
+
     }
 }

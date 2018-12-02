@@ -38,7 +38,13 @@ namespace Game
             _gun.LookAt(_gun.position + Vector3.forward, _gunDirection);
 
             if (Input.GetMouseButtonDown(0))
-                GameController.Instance.PlayerShoot(_gunEndPoint.position, _gunDirection);
+                if (CarryingItem == null)
+                    GameController.Instance.PlayerShoot(_gunEndPoint.position, _gunDirection);
+                else
+                {
+                    GameController.Instance.PlayerThrow(CarryingItem, _gunDirection);
+                    CarryingItem = null;
+                }
             if (_currentUsableItem != null && Input.GetButtonDown("Use"))
                 _currentUsableItem.Use(this);
         }

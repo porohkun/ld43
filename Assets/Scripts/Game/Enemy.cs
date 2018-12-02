@@ -83,6 +83,7 @@ namespace Game
                     Death();
                 bullet.Free();
             }
+
             var trigger = collision.GetComponent<Trigger>();
             if (trigger != null)
                 switch (trigger.Message)
@@ -93,6 +94,9 @@ namespace Game
                         break;
                     case "onboard":
                         _state = State.OnBoard;
+                        break;
+                    case "kill":
+                        Death();
                         break;
                 }
         }

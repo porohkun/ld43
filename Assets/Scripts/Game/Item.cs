@@ -9,6 +9,13 @@ namespace Game
 {
     public class Item : MonoBehaviour
     {
+        public Vector3 Direction { get; set; }
+
+        public virtual void Launch()
+        {
+
+        }
+
         public virtual void ToFront()
         {
 

@@ -7,14 +7,12 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Bullet : MonoBehaviour, ICacheable
+    public class Bullet : Item, ICacheable
     {
         [SerializeField]
         private float _speed;
 
-        public Vector3 Direction;
-
-        public void Launch()
+        public override void Launch()
         {
             transform.LookAt(transform.position + Vector3.forward, Direction);
         }
