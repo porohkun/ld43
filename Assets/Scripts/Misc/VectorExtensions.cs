@@ -153,14 +153,4 @@ public static class VectorExtensions
     {
         return new Vector2(Mathf.Abs(vector.x), Mathf.Abs(vector.y));
     }
-
-    public static Vector2 GetVector2(this MimiJson.JsonValue json)
-    {
-        return new Vector2(json["x"], json["y"]);
-    }
-
-    public static Vector2Int GetVector2Int(this MimiJson.JsonValue json)
-    {
-        return new Vector2Int(json["x"], json["y"]);
-    }
 }

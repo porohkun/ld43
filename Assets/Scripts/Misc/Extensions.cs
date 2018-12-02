@@ -12,11 +12,6 @@ public static class Extensions
         return new Color(color.r, color.g, color.b, a);
     }
 
-    public static Color GetColor(this MimiJson.JsonValue json)
-    {
-        return new Color(json["r"] / 255f, json["g"] / 255f, json["b"] / 255f, json["a", 255f] / 255f);
-    }
-
     public static bool IsZero(this float value)
     {
         return Mathf.Abs(value) < 0.00001f;
