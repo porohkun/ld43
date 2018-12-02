@@ -13,6 +13,7 @@ namespace Game
         {
             Normal,
             Boarding,
+            OnBoard,
             Death
         }
 
@@ -22,6 +23,8 @@ namespace Game
         private float _speed = 1f;
         [SerializeField]
         private float _boardingJumpPower = 1f;
+        [SerializeField]
+        private float _boardingSpeed = 1f;
         [SerializeField]
         private float _onBoardSpeed = 1f;
         [SerializeField]
@@ -36,7 +39,8 @@ namespace Game
                 switch (_state)
                 {
                     case State.Normal: return _speed;
-                    case State.Boarding: return _onBoardSpeed;
+                    case State.Boarding: return _boardingSpeed;
+                    case State.OnBoard: return _onBoardSpeed;
                     case State.Death: return -_speed * 2f;
                     default: return 0f;
                 }
@@ -68,11 +72,17 @@ namespace Game
                 bullet.Free();
             }
             var trigger = collision.GetComponent<Trigger>();
-            if (trigger != null && trigger.Message == "boarding")
-            {
-                _state = State.Boarding;
-                _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
-            }
+            if (trigger != null)
+                switch (trigger.Message)
+                {
+                    case "boarding":
+                        _state = State.Boarding;
+                        _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
+                        break;
+                    case "onboard":
+                        _state = State.OnBoard;
+                        break;
+                }
         }
 
         private void Death()

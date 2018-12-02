@@ -84,9 +84,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 40
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -129,10 +129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 50111764826463300}
-  _speed: 5000
-  _boardingJumpPower: 150
-  _onBoardSpeed: 4000
-  _deathJumpPower: 100
+  _speed: 1000
+  _boardingJumpPower: 20
+  _boardingSpeed: 300
+  _onBoardSpeed: 1000
+  _deathJumpPower: 20
   _deathRotateSpeed: 50
 --- !u!212 &212634400801437446
 SpriteRenderer:
