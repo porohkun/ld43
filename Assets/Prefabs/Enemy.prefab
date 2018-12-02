@@ -129,10 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 50111764826463300}
-  _speed: 1000
+  _sprite: {fileID: 212634400801437446}
   _boardingJumpPower: 20
-  _boardingSpeed: 300
-  _onBoardSpeed: 1000
   _deathJumpPower: 20
   _deathRotateSpeed: 50
 --- !u!212 &212634400801437446

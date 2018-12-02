@@ -583,6 +583,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248e36e11d65532428f4f12220f79d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speedArrow: {fileID: 224396094826602214}
+  _progressLine: {fileID: 114883028593777320}
+  _progressSprite: {fileID: 224957885678255412}
 --- !u!114 &114359424241282808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1213,13 +1216,13 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1299735060567206}
-  m_LocalRotation: {x: 0, y: 0, z: 0.28510293, w: 0.9584969}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224722918760163708}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 33.13}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1414,5 +1417,5 @@ RectTransform:
   m_AnchorMin: {x: 0.23, y: 0}
   m_AnchorMax: {x: 0.23, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

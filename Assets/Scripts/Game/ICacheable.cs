@@ -9,6 +9,7 @@ namespace Game
 {
     public interface ICacheable
     {
+        void Launch();
         void Free();
     }
 }

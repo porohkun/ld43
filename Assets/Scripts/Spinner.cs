@@ -16,7 +16,7 @@ public class Spinner : MonoBehaviour
 
     private void Update()
     {
-        _angle += RotatePerSecond * Time.deltaTime;
+        _angle += RotatePerSecond * Time.deltaTime * Game.GameController.TrainSpeed;
         _angle = _angle <= -360.0f ? 0f : _angle;
         _spinner.localEulerAngles = new Vector3(0f, 0f, _angle);
     }

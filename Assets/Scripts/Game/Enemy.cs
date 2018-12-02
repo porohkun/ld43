@@ -20,13 +20,11 @@ namespace Game
         [SerializeField]
         private Rigidbody2D _rigidBody;
         [SerializeField]
-        private float _speed = 1f;
+        private SpriteRenderer _sprite;
+        [SerializeField]
+        private int _maxHealth = 3;
         [SerializeField]
         private float _boardingJumpPower = 1f;
-        [SerializeField]
-        private float _boardingSpeed = 1f;
-        [SerializeField]
-        private float _onBoardSpeed = 1f;
         [SerializeField]
         private float _deathJumpPower = 1f;
         [SerializeField]
@@ -38,16 +36,28 @@ namespace Game
             {
                 switch (_state)
                 {
-                    case State.Normal: return _speed;
-                    case State.Boarding: return _boardingSpeed;
-                    case State.OnBoard: return _onBoardSpeed;
-                    case State.Death: return -_speed * 2f;
+                    case State.Normal: return GameController.EnemySpeed;
+                    case State.Boarding: return GameController.EnemyBoardingSpeed;
+                    case State.OnBoard: return GameController.EnemyOnBoardSpeed;
+                    case State.Death: return -GameController.EnemySpeed * 2f;
                     default: return 0f;
                 }
             }
         }
 
         private State _state = State.Normal;
+        private int _health;
+
+        public void Launch()
+        {
+            _rigidBody.velocity = Vector2.zero;
+            _rigidBody.angularVelocity = 0f;
+            transform.rotation = Quaternion.identity;
+            transform.localPosition = Vector3.zero;
+            transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
+            _sprite.sortingOrder = Random.Range(-100, 100);
+            _health = _maxHealth;
+        }
 
         private void FixedUpdate()
         {
@@ -68,7 +78,9 @@ namespace Game
             var bullet = collision.GetComponent<Bullet>();
             if (bullet != null)
             {
-                Death();
+                _health--;
+                if (_health <= 0)
+                    Death();
                 bullet.Free();
             }
             var trigger = collision.GetComponent<Trigger>();

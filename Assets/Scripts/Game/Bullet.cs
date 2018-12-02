@@ -12,17 +12,16 @@ namespace Game
         [SerializeField]
         private float _speed;
 
-        private Vector3 _direction;
+        public Vector3 Direction;
 
-        public void Move(Vector2 direction)
+        public void Launch()
         {
-            _direction = direction;
-            transform.LookAt(transform.position + Vector3.forward, direction);
+            transform.LookAt(transform.position + Vector3.forward, Direction);
         }
 
         private void Update()
         {
-            transform.position += _direction * _speed * Time.deltaTime;
+            transform.position += Direction * _speed * Time.deltaTime;
             if (transform.position.y > GameController.Size.y || transform.position.y < -GameController.Size.y || transform.position.x > GameController.Size.x || transform.position.x < -GameController.Size.x * 2f)
                 Free();
         }
