@@ -26,12 +26,38 @@ namespace Game
         public float ShipSpeed => _shipSpeed * (_work - 1f);
 
         private Player _player;
+        private Member _member;
         private float _work;
 
         public override void Use(Player player)
         {
-            player.Bisy = !player.Bisy;
-            _player = player.Bisy ? player : null;
+            if (player.IsCarrying)
+            {
+                var member = player.CarryingItem as Member;
+                if (member != null && _member == null)
+                {
+                    member.transform.parent = _anchor;
+                    member.transform.localPosition = Vector3.zero;
+                    member.transform.localRotation = Quaternion.identity;
+                    member.transform.localScale = _playerScale;
+                    member.ToBack();
+                    _member = member;
+                    player.Carry(null);
+                    _member.Work(true);
+                }
+            }
+            else if (_member != null)
+            {
+                _member.transform.localScale = Vector3.one;
+                player.Carry(_member);
+                _member.Work(false);
+                _member = null;
+            }
+            else
+            {
+                player.Bisy = !player.Bisy;
+                _player = player.Bisy ? player : null;
+            }
         }
 
         private void FixedUpdate()
@@ -45,8 +71,8 @@ namespace Game
 
         private void Update()
         {
-            if (_player != null)
-                _work += _workUpSpeed * Time.deltaTime;
+            if (_player != null || _member != null)
+                _work += _workUpSpeed * Time.deltaTime * (_member != null ? 0.5f : 1f);
             else
                 _work -= _workDownSpeed * Time.deltaTime;
             if (_work < 0f)

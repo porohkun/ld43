@@ -151,6 +151,7 @@ namespace Game
                 item.gameObject.SetActive(true);
                 item.transform.localPosition = Vector3.zero;
                 item.transform.localRotation = Quaternion.identity;
+                item.transform.localScale = Vector3.one;
                 item.ToFront();
             }
         }

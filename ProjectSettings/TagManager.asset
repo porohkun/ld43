@@ -47,6 +47,15 @@ TagManager:
   - name: Train
     uniqueID: 1649765267
     locked: 0
+  - name: Member1
+    uniqueID: 3330804839
+    locked: 0
+  - name: Member2
+    uniqueID: 7059113
+    locked: 0
+  - name: Member3
+    uniqueID: 1220592597
+    locked: 0
   - name: Enemy
     uniqueID: 1071693265
     locked: 0

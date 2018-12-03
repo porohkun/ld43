@@ -15,7 +15,7 @@ namespace Game
         public override void Launch()
         {
             base.Launch();
-            _sprite.gameObject.layer = LayerMask.NameToLayer("Projectile");
+            gameObject.layer = LayerMask.NameToLayer("Projectile");
         }
 
         public override void ToFront()
