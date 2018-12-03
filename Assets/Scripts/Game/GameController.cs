@@ -38,6 +38,8 @@ namespace Game
         private GameObject _platformBack;
         [SerializeField]
         private GameObject _shipTrigger;
+        [SerializeField]
+        private WorkPlace[] _workPlaces;
 
         public static Vector2 Size { get; private set; }
         public static float TrainSpeed { get; private set; }
@@ -86,15 +88,16 @@ namespace Game
 
             _platform.gameObject.SetActive(false);
             _spawnRoutine = StartCoroutine(SpawnRoutine());
-            while (TrainSpeed < 1f)
-            {
-                TrainSpeed += Time.deltaTime / 8f;
-                _currentPath += TrainSpeed * Time.deltaTime;
-                yield return new WaitForEndOfFrame();
-            }
-            TrainSpeed = 1f;
+            //while (TrainSpeed < 1f)
+            //{
+            //    TrainSpeed += Time.deltaTime / 8f;
+            //    _currentPath += TrainSpeed * Time.deltaTime;
+            //    yield return new WaitForEndOfFrame();
+            //}
+            //TrainSpeed = 1f;
             while (CheckPointState <= 1f)
             {
+                TrainSpeed += Time.deltaTime / 8f * Mathf.Sign(1f + _workPlaces.Sum(w => w.ShipSpeed) - TrainSpeed);
                 _currentPath += TrainSpeed * Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }

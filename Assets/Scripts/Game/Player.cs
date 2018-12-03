@@ -27,10 +27,13 @@ namespace Game
         private LadderSensor _ladderSensor;
 
         public bool IsCarrying => CarryingItem != null;
+        public bool Bisy { get; set; }
+        public Item CarryingItem { get; private set; }
+        public Transform Body => _body;
 
         private Vector3 _gunDirection;
         private UsableItem _currentUsableItem;
-        public Item CarryingItem { get; private set; }
+        private bool _stopped;
 
         private void Start()
         {
@@ -39,6 +42,30 @@ namespace Game
 
         private void Update()
         {
+            if (_currentUsableItem != null && Input.GetButtonDown("Use"))
+                _currentUsableItem.Use(this);
+
+            if (Bisy)
+            {
+                _handAnimator.speed = 1f;
+                _handAnimator.Play("cptn_top_bisy");
+                _torsoAnimator.SetBool("walk", false);
+                if (!_stopped)
+                    if (Input.GetAxis("Horizontal").IsZero())
+                    {
+                        _stopped = true;
+                        return;
+                    }
+                    else
+                        return;
+                else if (!Input.GetAxis("Horizontal").IsZero())
+                    _currentUsableItem.Use(this);
+                else
+                    return;
+            }
+
+            _stopped = false;
+
             _gunDirection = Camera.main.ScreenTo3DWorld(Input.mousePosition) - transform.position;
             _body.localScale = new Vector3(Mathf.Sign(_gunDirection.x), 1f, 1f);
 
@@ -80,8 +107,6 @@ namespace Game
                     GameController.Instance.PlayerThrow(CarryingItem, _gunDirection);
                     CarryingItem = null;
                 }
-            if (_currentUsableItem != null && Input.GetButtonDown("Use"))
-                _currentUsableItem.Use(this);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
