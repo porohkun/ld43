@@ -23,6 +23,8 @@ namespace Game
         private Animator _handAnimator;
         [SerializeField]
         private Transform _body;
+        [SerializeField]
+        private LadderSensor _ladderSensor;
 
         public bool IsCarrying => CarryingItem != null;
 
@@ -35,17 +37,29 @@ namespace Game
             _handAnimator.speed = 0.00001f;
         }
 
-        private void FixedUpdate()
-        {
-            var dir = Input.GetAxis("Horizontal");
-            _torsoAnimator.SetBool("walk", !_rigidBody.velocity.x.IsZero());
-            _rigidBody.AddForce(new Vector2(_speed * dir * Time.fixedDeltaTime, 0f), ForceMode2D.Force);
-        }
-
         private void Update()
         {
             _gunDirection = Camera.main.ScreenTo3DWorld(Input.mousePosition) - transform.position;
             _body.localScale = new Vector3(Mathf.Sign(_gunDirection.x), 1f, 1f);
+
+            var horDir = Input.GetAxis("Horizontal");
+            _torsoAnimator.SetBool("walk", !_rigidBody.velocity.x.IsZero());
+            if (!horDir.IsZero())
+                _rigidBody.velocity = new Vector2(horDir * 6f, _rigidBody.velocity.y);
+
+            if (_ladderSensor.IsLadder)
+            {
+                var verDir = Input.GetAxis("Vertical");
+                if (!verDir.IsZero())
+                {
+                    if (horDir.IsZero())
+                        transform.position = transform.position.SetX(_ladderSensor.LadderX);
+                    _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, verDir * 6f);
+                    _ladderSensor.LinkedObject.SetActive(false);
+                }
+                else
+                    _ladderSensor.LinkedObject.SetActive(true);
+            }
 
             if (IsCarrying)
             {
@@ -78,6 +92,9 @@ namespace Game
                 {
                     case "ship":
                         GameController.PlayerAllowFly = true;
+                        break;
+                    case "depth":
+                        transform.position = transform.position.SetZ(trigger.ForceZ);
                         break;
                 }
             var usableItem = collision.GetComponent<UsableItem>();

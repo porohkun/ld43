@@ -24,6 +24,7 @@ namespace Game
 
         public override void Launch()
         {
+            transform.position = transform.position.SetZ(-1.5f);
             foreach (var collider in _throwEnableColliders)
                 collider.enabled = true;
             foreach (var collider in _throwDisableColliders)

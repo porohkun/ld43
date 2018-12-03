@@ -19,6 +19,11 @@ public static class VectorExtensions
         return new Vector3(vector.x, vector.y, z);
     }
 
+    public static Vector3 SetX(this Vector3 vector, float x)
+    {
+        return new Vector3(x, vector.y, vector.z);
+    }
+
     public static Vector3Int AddZ(this Vector2Int vector, int z)
     {
         return new Vector3Int(vector.x, vector.y, z);

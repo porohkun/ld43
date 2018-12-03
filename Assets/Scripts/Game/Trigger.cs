@@ -11,7 +11,13 @@ namespace Game
     {
         [SerializeField]
         private string _message;
+        [SerializeField]
+        private GameObject _linkedObject;
+        [SerializeField]
+        private float _forceZ;
 
         public string Message => _message;
+        public GameObject LinkedObject => _linkedObject;
+        public float ForceZ => _forceZ;
     }
 }

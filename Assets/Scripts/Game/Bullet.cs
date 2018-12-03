@@ -14,6 +14,7 @@ namespace Game
 
         public override void Launch()
         {
+            transform.position = transform.position.SetZ(-1.5f);
             transform.LookAt(transform.position + Vector3.forward, Direction);
         }
 
