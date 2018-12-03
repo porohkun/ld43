@@ -75,13 +75,13 @@ namespace Game
             foreach (var coll in _disbleCollidersOnFly)
                 coll.enabled = false;
             _currentPath = 0f;
-            while (TrainSpeed < 0.3f)
+            while (TrainSpeed < 0.4f)
             {
-                TrainSpeed += Time.deltaTime / 12f;
+                TrainSpeed += Time.deltaTime / 9f;
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
             }
-            while (_platform.position.x > -23f)
+            while (_platform.position.x > -30f)
             {
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
@@ -104,13 +104,13 @@ namespace Game
             }
             StopCoroutine(_spawnRoutine);
 
-            while (TrainSpeed > 0.3f)
+            while (TrainSpeed > 0.4f)
             {
-                TrainSpeed -= Time.deltaTime / 12f;
+                TrainSpeed -= Time.deltaTime / 9f;
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
             }
-            _platform.transform.position = Vector3.right * 23f;
+            _platform.transform.position = Vector3.right * 30f;
             _platform.gameObject.SetActive(true);
             while (_platform.position.x > 5f)
             {
@@ -119,7 +119,7 @@ namespace Game
             }
             while (TrainSpeed > 0.05f)
             {
-                TrainSpeed -= Time.deltaTime / 12f;
+                TrainSpeed -= Time.deltaTime / 6f;
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
             }
