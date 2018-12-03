@@ -62,7 +62,7 @@ namespace Game
             transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
             var order = Random.Range(-200, 200) * 5;
             foreach (var sprite in _sprites)
-                sprite.sortingOrder = order;
+                sprite.sortingOrder += order;
             _offsetPoint.transform.localPosition = Vector3.up * (-order / 2000f);
             _health = _maxHealth;
         }
