@@ -54,7 +54,7 @@ namespace Game
 
         private void Start()
         {
-            Size = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            Size = Camera.main.ScreenTo3DWorld(new Vector2(Screen.width, Screen.height)) * 1.1f;
         }
 
         public bool StartGame()

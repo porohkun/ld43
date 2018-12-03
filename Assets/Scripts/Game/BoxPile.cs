@@ -10,7 +10,7 @@ namespace Game
     public class BoxPile : UsableItem
     {
         [SerializeField]
-        private Transform[] _boxPlaces;
+        private GameObject[] _boxPlaces;
         [SerializeField]
         private Box _boxPrefab;
 
@@ -18,8 +18,9 @@ namespace Game
 
         private void Awake()
         {
-            foreach (var boxPlace in _boxPlaces)
-                _boxes.AddRange(boxPlace.GetChilds<Box>());
+            _boxes.AddRange(transform.GetChilds<Box>());
+            for (int i = 0; i < _boxPlaces.Length; i++)
+                _boxPlaces[i].SetActive(i < _boxes.Count);
         }
 
         public override void Use(Player player)
@@ -29,17 +30,22 @@ namespace Game
                 var box = player.CarryingItem as Box;
                 if (box != null && _boxes.Count < _boxPlaces.Length)
                 {
-                    box.transform.parent = _boxPlaces[_boxes.Count];
+                    box.transform.parent = transform;
+                    box.gameObject.SetActive(false);
                     box.transform.localPosition = Vector3.zero;
                     box.transform.localRotation = Quaternion.identity;
                     box.ToBack();
                     _boxes.Add(box);
+                    for (int i = 0; i < _boxPlaces.Length; i++)
+                        _boxPlaces[i].SetActive(i < _boxes.Count);
                     player.Carry(null);
                 }
             }
             else if (_boxes.Count > 0)
             {
                 var box = _boxes.RemoveAtAndReturn(_boxes.Count - 1);
+                for (int i = 0; i < _boxPlaces.Length; i++)
+                    _boxPlaces[i].SetActive(i < _boxes.Count);
                 player.Carry(box);
             }
         }

@@ -14,11 +14,15 @@ namespace Game
         [SerializeField]
         private float _speed = 1f;
         [SerializeField]
-        private Transform _gun;
-        [SerializeField]
         private Transform _gunEndPoint;
         [SerializeField]
         private Transform _carryPoint;
+        [SerializeField]
+        private Animator _torsoAnimator;
+        [SerializeField]
+        private Animator _handAnimator;
+        [SerializeField]
+        private Transform _body;
 
         public bool IsCarrying => CarryingItem != null;
 
@@ -26,16 +30,33 @@ namespace Game
         private UsableItem _currentUsableItem;
         public Item CarryingItem { get; private set; }
 
+        private void Start()
+        {
+            _handAnimator.speed = 0.00001f;
+        }
+
         private void FixedUpdate()
         {
             var dir = Input.GetAxis("Horizontal");
+            _torsoAnimator.SetBool("walk", !_rigidBody.velocity.x.IsZero());
             _rigidBody.AddForce(new Vector2(_speed * dir * Time.fixedDeltaTime, 0f), ForceMode2D.Force);
         }
 
         private void Update()
         {
-            _gunDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _gun.position;
-            _gun.LookAt(_gun.position + Vector3.forward, _gunDirection);
+            _gunDirection = Camera.main.ScreenTo3DWorld(Input.mousePosition) - transform.position;
+            _body.localScale = new Vector3(Mathf.Sign(_gunDirection.x), 1f, 1f);
+
+            if (IsCarrying)
+            {
+                _handAnimator.speed = 1f;
+                _handAnimator.Play("cptn_top_carry");
+            }
+            else
+            {
+                _handAnimator.speed = 0.00001f;
+                _handAnimator.Play("cptn_top_gun", 0, Vector3.Angle(Vector3.down, _gunDirection) / 180f);
+            }
 
             if (Input.GetMouseButtonDown(0))
                 if (CarryingItem == null)
@@ -85,6 +106,7 @@ namespace Game
             if (item != null)
             {
                 item.transform.parent = _carryPoint;
+                item.gameObject.SetActive(true);
                 item.transform.localPosition = Vector3.zero;
                 item.transform.localRotation = Quaternion.identity;
                 item.ToFront();

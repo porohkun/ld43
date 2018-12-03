@@ -72,4 +72,13 @@ public static class Extensions
         return item;
     }
 
+    public static Vector3 ScreenTo3DWorld(this Camera camera, Vector3 position)
+    {
+        var ray = camera.ScreenPointToRay(position);
+        var pos = ray.GetPoint(30f);
+        var dir = pos - camera.transform.position;
+        ray = new Ray(camera.transform.position, pos - camera.transform.position);
+        return ray.GetPoint(camera.transform.position.magnitude * dir.magnitude / Mathf.Abs(dir.z));
+    }
+
 }

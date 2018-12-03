@@ -35,18 +35,18 @@ namespace Game
 
         private void Update()
         {
-            if (IsThrowing &&
+            if (IsThrowing && (
                 transform.position.y > GameController.Size.y ||
                 transform.position.y < -GameController.Size.y ||
                 transform.position.x > GameController.Size.x ||
-                transform.position.x < -GameController.Size.x * 2f)
+                transform.position.x < -GameController.Size.x * 2f))
                 Free();
         }
 
         private void FixedUpdate()
         {
             if (IsThrowing)
-                _rigidBody.AddForce(new Vector2(-_throwSpeed * Time.fixedDeltaTime, 0f), ForceMode2D.Force);
+                _rigidBody.AddForce(new Vector2(-_throwSpeed * GameController.TrainSpeed * Time.fixedDeltaTime, 0f), ForceMode2D.Force);
         }
 
         public void Free()
