@@ -12,6 +12,12 @@ namespace Game
         [SerializeField]
         private SpriteRenderer _sprite;
 
+        public override void Launch()
+        {
+            base.Launch();
+            _sprite.gameObject.layer = LayerMask.NameToLayer("Projectile");
+        }
+
         public override void ToFront()
         {
             _sprite.sortingLayerName = "Player";

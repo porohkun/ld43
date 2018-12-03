@@ -20,7 +20,7 @@ namespace Game
         [SerializeField]
         private Rigidbody2D _rigidBody;
         [SerializeField]
-        private SpriteRenderer _sprite;
+        private SpriteRenderer[] _sprites;
         [SerializeField]
         private int _maxHealth = 3;
         [SerializeField]
@@ -29,6 +29,8 @@ namespace Game
         private float _deathJumpPower = 1f;
         [SerializeField]
         private float _deathRotateSpeed = 1f;
+        [SerializeField]
+        private Animator _animator;
 
         public float Speed
         {
@@ -50,12 +52,15 @@ namespace Game
 
         public void Launch()
         {
+            _rigidBody.freezeRotation = true;
             _rigidBody.velocity = Vector2.zero;
             _rigidBody.angularVelocity = 0f;
             transform.rotation = Quaternion.identity;
             transform.localPosition = Vector3.zero;
             transform.localScale = Vector3.one * Random.Range(0.8f, 1.2f);
-            _sprite.sortingOrder = Random.Range(-100, 100);
+            var order = Random.Range(-200, 200) * 5;
+            foreach (var sprite in _sprites)
+                sprite.sortingOrder = order;
             _health = _maxHealth;
         }
 
@@ -103,6 +108,7 @@ namespace Game
 
         private void Death()
         {
+            _rigidBody.freezeRotation = false;
             _state = State.Death;
             gameObject.layer = LayerMask.NameToLayer("Default");
             _rigidBody.AddForce(_deathJumpPower * Vector2.up + _deathJumpPower * 0.4f * Random.insideUnitCircle, ForceMode2D.Impulse);
