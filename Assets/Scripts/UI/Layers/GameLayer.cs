@@ -22,14 +22,12 @@ namespace UI.Layers
 
         public void FlyClick()
         {
-            if (GameController.Instance.StartGame())
-            {
-                _startButton.SetActive(false);
-            }
+            GameController.Instance.StartGame();
         }
 
         private void Update()
         {
+            _startButton.SetActive(!GameController.Flying);
             _speedArrow.localRotation = Quaternion.Euler(0f, 0f, (1f - GameController.TrainSpeed) * 90f);
             _progressLine.fillAmount = GameController.CheckPointState;
             _progressSprite.anchorMin = new Vector2(GameController.CheckPointState, 0f);

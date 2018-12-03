@@ -45,12 +45,14 @@ namespace Game
         public static float EnemyBoardingSpeed => Instance._enemyBoardingSpeed - (1 - TrainSpeed) * Instance._enemySpeedOffset * 2;
         public static float EnemyOnBoardSpeed => Instance._enemyOnBoardSpeed;
         public static float CheckPointState => Instance._currentPath / Instance._checkPointPath;
-
+        public static bool Flying => Instance._started;
+        public static float FullPath { get; private set; }
         public static bool PlayerAllowFly { get; set; } = true;
 
         private bool _started;
         private float _currentPath;
         private Coroutine _spawnRoutine = null;
+        
 
         private void Start()
         {
@@ -133,6 +135,7 @@ namespace Game
                 coll.enabled = false;
             foreach (var coll in _disbleCollidersOnFly)
                 coll.enabled = true;
+            FullPath += _currentPath;
         }
 
         public IEnumerator SpawnRoutine()
