@@ -31,6 +31,8 @@ namespace Game
         private float _deathRotateSpeed = 1f;
         [SerializeField]
         private Animator _animator;
+        [SerializeField]
+        private Transform _offsetPoint;
 
         public float Speed
         {
@@ -61,6 +63,7 @@ namespace Game
             var order = Random.Range(-200, 200) * 5;
             foreach (var sprite in _sprites)
                 sprite.sortingOrder = order;
+            _offsetPoint.transform.localPosition = Vector3.up * (-order / 2000f);
             _health = _maxHealth;
         }
 
@@ -96,6 +99,8 @@ namespace Game
                     case "boarding":
                         _state = State.Boarding;
                         _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
+                        DigitalRuby.Tween.TweenFactory.Tween(this, _offsetPoint.transform.localPosition, Vector3.zero, 0.2f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseInOut,
+                            p => _offsetPoint.transform.localPosition = p.CurrentValue, null);
                         break;
                     case "onboard":
                         _state = State.OnBoard;

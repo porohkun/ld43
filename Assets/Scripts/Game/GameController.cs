@@ -15,7 +15,7 @@ namespace Game
         [SerializeField]
         private Transform _enemySpawnPoint;
         [SerializeField]
-        private Enemy _enemyPrefab;
+        private Enemy[] _enemyPrefabs;
         [SerializeField]
         private float _enemySpeed = 1f;
         [SerializeField]
@@ -33,13 +33,11 @@ namespace Game
         [SerializeField]
         private Transform _platform;
         [SerializeField]
-        private GameObject _shipBack;
-        [SerializeField]
-        private GameObject _platformBack;
-        [SerializeField]
-        private GameObject _shipTrigger;
-        [SerializeField]
         private WorkPlace[] _workPlaces;
+        [SerializeField]
+        private Collider2D[] _disbleCollidersOnFly;
+        [SerializeField]
+        private Collider2D[] _enableCollidersOnFly;
 
         public static Vector2 Size { get; private set; }
         public static float TrainSpeed { get; private set; }
@@ -70,9 +68,10 @@ namespace Game
         private IEnumerator GameRoutine()
         {
             _started = true;
-            _shipBack.SetActive(true);
-            _platformBack.gameObject.SetActive(false);
-            _shipTrigger.SetActive(false);
+            foreach (var coll in _enableCollidersOnFly)
+                coll.enabled = true;
+            foreach (var coll in _disbleCollidersOnFly)
+                coll.enabled = false;
             _currentPath = 0f;
             while (TrainSpeed < 0.3f)
             {
@@ -129,16 +128,18 @@ namespace Game
             }
             _platform.position = Vector3.zero;
             TrainSpeed = 0f;
-            _shipBack.SetActive(false);
-            _platformBack.gameObject.SetActive(true);
-            _shipTrigger.SetActive(true);
+            _started = false;
+            foreach (var coll in _enableCollidersOnFly)
+                coll.enabled = false;
+            foreach (var coll in _disbleCollidersOnFly)
+                coll.enabled = true;
         }
 
         public IEnumerator SpawnRoutine()
         {
             while (_started)
             {
-                var enemy = Instantiate(_enemyPrefab, _enemySpawnPoint);
+                var enemy = Instantiate(_enemyPrefabs.GetRandom(), _enemySpawnPoint);
                 enemy.Launch();
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }

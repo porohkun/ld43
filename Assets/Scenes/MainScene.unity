@@ -1092,8 +1092,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemySpawnDelay: 0.3
   _enemySpawnPoint: {fileID: 1854429062}
-  _enemyPrefab: {fileID: 114872560810126052, guid: 22707a43ca8683b47b098dd65005efe7,
-    type: 2}
+  _enemyPrefabs:
+  - {fileID: 114872560810126052, guid: 22707a43ca8683b47b098dd65005efe7, type: 2}
+  - {fileID: 114195477877584810, guid: 4f6550e25122af44da0137cf27de6531, type: 2}
   _enemySpeed: 1000
   _enemyBoardingSpeed: 300
   _enemyOnBoardSpeed: 1000
@@ -1103,13 +1104,16 @@ MonoBehaviour:
     type: 2}
   _checkPointPath: 20
   _platform: {fileID: 647566479}
-  _shipBack: {fileID: 1970809629}
-  _platformBack: {fileID: 306575703}
-  _shipTrigger: {fileID: 1438462964}
   _workPlaces:
   - {fileID: 390315003}
   - {fileID: 1040180900}
   - {fileID: 837875713}
+  _disbleCollidersOnFly:
+  - {fileID: 1438462967}
+  - {fileID: 306575705}
+  - {fileID: 1175308568}
+  _enableCollidersOnFly:
+  - {fileID: 1970809631}
 --- !u!4 &359666942
 Transform:
   m_ObjectHideFlags: 0
@@ -5393,7 +5397,7 @@ GameObject:
   - component: {fileID: 1438462965}
   - component: {fileID: 1438462967}
   - component: {fileID: 1438462966}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: ShipTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
