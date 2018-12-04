@@ -33,6 +33,8 @@ namespace Game
         private Animator _animator;
         [SerializeField]
         private Transform _offsetPoint;
+        [SerializeField]
+        private GameObject _shadow;
 
         public float Speed
         {
@@ -101,6 +103,7 @@ namespace Game
                         _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
                         DigitalRuby.Tween.TweenFactory.Tween(this, _offsetPoint.transform.localPosition, Vector3.zero, 0.2f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseInOut,
                             p => _offsetPoint.transform.localPosition = p.CurrentValue, null);
+                        _shadow.SetActive(false);
                         break;
                     case "onboard":
                         _state = State.OnBoard;
@@ -118,6 +121,7 @@ namespace Game
             gameObject.layer = LayerMask.NameToLayer("Default");
             _rigidBody.AddForce(_deathJumpPower * Vector2.up + _deathJumpPower * 0.4f * Random.insideUnitCircle, ForceMode2D.Impulse);
             _rigidBody.AddTorque(Random.Range(-_deathRotateSpeed, _deathRotateSpeed));
+            
         }
 
         public void Free()

@@ -494,6 +494,7 @@ MonoBehaviour:
   _deathRotateSpeed: 80
   _animator: {fileID: 95763784605329992}
   _offsetPoint: {fileID: 4236836784153278}
+  _shadow: {fileID: 1162555059377518}
 --- !u!212 &212296697611857530
 SpriteRenderer:
   m_ObjectHideFlags: 1
