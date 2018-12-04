@@ -59,7 +59,7 @@ namespace Game
         private float _nextCheckPointPath;
         private float _nextSpawnDelay;
         private Coroutine _spawnRoutine = null;
-
+        private Coroutine _gameRoutine = null;
 
         private void Start()
         {
@@ -72,13 +72,14 @@ namespace Game
             _nextSpawnDelay = _enemySpawnDelay;
             ShipHealth = 10;
             _shipAnimator.SetBool("fly", false);
+            _shipAnimator.SetBool("die", false);
         }
 
         public bool StartGame()
         {
             if (!PlayerAllowFly)
                 return PlayerAllowFly;
-            StartCoroutine(GameRoutine());
+            _gameRoutine = StartCoroutine(GameRoutine());
             return PlayerAllowFly;
         }
 
@@ -86,13 +87,21 @@ namespace Game
         {
             if (ShipHealth <= 0)
             {
-                
+                _shipAnimator.SetBool("die", true);
                 GameOver();
             }
         }
 
         public void GameOver()
         {
+            StopCoroutine(_gameRoutine);
+            StopCoroutine(_spawnRoutine);
+            DigitalRuby.Tween.TweenFactory.Tween(this, TrainSpeed, 0f, 1f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseOut,
+                (p) =>
+                {
+                    TrainSpeed = p.CurrentValue;
+                    _currentPath += TrainSpeed * Time.deltaTime;
+                }, null);
 
         }
 
