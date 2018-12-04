@@ -40,6 +40,8 @@ namespace Game
         private Collider2D[] _enableCollidersOnFly;
         [SerializeField]
         private UsableItem[] _startupItems;
+        [SerializeField]
+        private Animator _shipAnimator;
 
         public static Vector2 Size { get; private set; }
         public static float TrainSpeed { get; private set; }
@@ -50,13 +52,14 @@ namespace Game
         public static bool Flying => Instance._started;
         public static float FullPath { get; private set; }
         public static bool PlayerAllowFly { get; set; } = true;
+        public static int ShipHealth { get; set; } = 10;
 
         private bool _started;
         private float _currentPath;
         private float _nextCheckPointPath;
         private float _nextSpawnDelay;
         private Coroutine _spawnRoutine = null;
-        
+
 
         private void Start()
         {
@@ -67,6 +70,8 @@ namespace Game
         {
             _nextCheckPointPath = _checkPointPath;
             _nextSpawnDelay = _enemySpawnDelay;
+            ShipHealth = 10;
+            _shipAnimator.SetBool("fly", false);
         }
 
         public bool StartGame()
@@ -75,6 +80,20 @@ namespace Game
                 return PlayerAllowFly;
             StartCoroutine(GameRoutine());
             return PlayerAllowFly;
+        }
+
+        private void Update()
+        {
+            if (ShipHealth <= 0)
+            {
+                
+                GameOver();
+            }
+        }
+
+        public void GameOver()
+        {
+
         }
 
         private IEnumerator GameRoutine()
@@ -87,6 +106,7 @@ namespace Game
             foreach (var coll in _disbleCollidersOnFly)
                 coll.enabled = false;
             _currentPath = 0f;
+            _shipAnimator.SetBool("fly", true);
             while (TrainSpeed < 0.4f)
             {
                 TrainSpeed += Time.deltaTime / 9f;
@@ -136,6 +156,7 @@ namespace Game
                 _platform.position += Vector3.left * TrainSpeed * Time.deltaTime * 8f;
                 yield return new WaitForEndOfFrame();
             }
+            _shipAnimator.SetBool("fly", false);
             while (TrainSpeed > 0.05f)
             {
                 TrainSpeed -= Time.deltaTime / 6f;

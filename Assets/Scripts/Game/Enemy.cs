@@ -53,6 +53,7 @@ namespace Game
 
         private State _state = State.Normal;
         private int _health;
+        private Coroutine _hitCoroutine;
 
         public void Launch()
         {
@@ -104,9 +105,14 @@ namespace Game
                         DigitalRuby.Tween.TweenFactory.Tween(this, _offsetPoint.transform.localPosition, Vector3.zero, 0.2f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseInOut,
                             p => _offsetPoint.transform.localPosition = p.CurrentValue, null);
                         _shadow.SetActive(false);
+                        _animator.SetBool("walk", true);
                         break;
                     case "onboard":
                         _state = State.OnBoard;
+                        break;
+                    case "hit":
+                        _animator.SetBool("hit", true);
+                        _hitCoroutine = StartCoroutine(HitRoutine());
                         break;
                     case "kill":
                         Death();
@@ -114,14 +120,24 @@ namespace Game
                 }
         }
 
+        public IEnumerator HitRoutine()
+        {
+            yield return new WaitForSeconds(0.33f);
+            GameController.ShipHealth--;
+            yield return new WaitForSeconds(0.33f);
+            _hitCoroutine = StartCoroutine(HitRoutine());
+        }
+
         private void Death()
         {
+            if (_hitCoroutine != null)
+                StopCoroutine(_hitCoroutine);
             _rigidBody.freezeRotation = false;
             _state = State.Death;
             gameObject.layer = LayerMask.NameToLayer("Default");
             _rigidBody.AddForce(_deathJumpPower * Vector2.up + _deathJumpPower * 0.4f * Random.insideUnitCircle, ForceMode2D.Impulse);
             _rigidBody.AddTorque(Random.Range(-_deathRotateSpeed, _deathRotateSpeed));
-            
+
         }
 
         public void Free()
