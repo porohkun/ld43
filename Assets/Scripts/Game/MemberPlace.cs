@@ -45,7 +45,8 @@ namespace Game
 
         public override void Refresh()
         {
-            Destroy(_member.gameObject);
+            if (_member != null)
+                Destroy(_member.gameObject);
             _member = null;
             if (Random.value < 0.2f)
             {
