@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +40,17 @@ namespace Game
             {
                 player.Carry(_member);
                 _member = null;
+            }
+        }
+
+        public override void Refresh()
+        {
+            Destroy(_member.gameObject);
+            _member = null;
+            if (Random.value < 0.2f)
+            {
+                _member = Instantiate(_memberPrefabs.GetRandom(), _memberPlace);
+                _member.transform.localPosition = Vector3.zero;
             }
         }
     }

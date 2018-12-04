@@ -38,25 +38,35 @@ namespace Game
         private Collider2D[] _disbleCollidersOnFly;
         [SerializeField]
         private Collider2D[] _enableCollidersOnFly;
+        [SerializeField]
+        private UsableItem[] _startupItems;
 
         public static Vector2 Size { get; private set; }
         public static float TrainSpeed { get; private set; }
         public static float EnemySpeed => Instance._enemySpeed + (1 - TrainSpeed) * Instance._enemySpeedOffset;
         public static float EnemyBoardingSpeed => Instance._enemyBoardingSpeed - (1 - TrainSpeed) * Instance._enemySpeedOffset * 2;
         public static float EnemyOnBoardSpeed => Instance._enemyOnBoardSpeed;
-        public static float CheckPointState => Instance._currentPath / Instance._checkPointPath;
+        public static float CheckPointState => Instance._currentPath / Instance._nextCheckPointPath;
         public static bool Flying => Instance._started;
         public static float FullPath { get; private set; }
         public static bool PlayerAllowFly { get; set; } = true;
 
         private bool _started;
         private float _currentPath;
+        private float _nextCheckPointPath;
+        private float _nextSpawnDelay;
         private Coroutine _spawnRoutine = null;
         
 
         private void Start()
         {
             Size = Camera.main.ScreenTo3DWorld(new Vector2(Screen.width, Screen.height)) * 1.1f;
+        }
+
+        public void NewGame()
+        {
+            _nextCheckPointPath = _checkPointPath;
+            _nextSpawnDelay = _enemySpawnDelay;
         }
 
         public bool StartGame()
@@ -69,6 +79,8 @@ namespace Game
 
         private IEnumerator GameRoutine()
         {
+            _nextCheckPointPath = _nextCheckPointPath * 1.2f;
+            _nextSpawnDelay = _nextSpawnDelay / 1.1f;
             _started = true;
             foreach (var coll in _enableCollidersOnFly)
                 coll.enabled = true;
@@ -103,6 +115,13 @@ namespace Game
                 yield return new WaitForEndOfFrame();
             }
             StopCoroutine(_spawnRoutine);
+
+
+
+            foreach (var item in _startupItems)
+                item.Refresh();
+
+
 
             while (TrainSpeed > 0.4f)
             {
@@ -144,7 +163,7 @@ namespace Game
             {
                 var enemy = Instantiate(_enemyPrefabs.GetRandom(), _enemySpawnPoint);
                 enemy.Launch();
-                yield return new WaitForSeconds(_enemySpawnDelay);
+                yield return new WaitForSeconds(_nextSpawnDelay);
             }
         }
 

@@ -81,5 +81,10 @@ namespace Game
                 _work = 1f;
             _workImage.fillAmount = _work;
         }
+
+        public override void Refresh()
+        {
+            
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Game
     public abstract class UsableItem : Item
     {
         public abstract void Use(Player player);
+
+        public abstract void Refresh();
     }
 }

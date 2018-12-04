@@ -1362,68 +1362,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1657148844351650, guid: 7258d2e0985a58e408c46e8263effddb, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224813846484885832, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4950931
-      objectReference: {fileID: 0}
-    - target: {fileID: 224813846484885832, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4950931
-      objectReference: {fileID: 0}
-    - target: {fileID: 224813846484885832, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4950931
-      objectReference: {fileID: 0}
-    - target: {fileID: 224813846484885832, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -2.5245
-      objectReference: {fileID: 0}
     - target: {fileID: 224813846484885832, guid: 7258d2e0985a58e408c46e8263effddb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.7524109
+      value: -0.7524414
       objectReference: {fileID: 0}
-    - target: {fileID: 114247146229444510, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.14057496
-      objectReference: {fileID: 0}
-    - target: {fileID: 114247146229444510, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.764151
-      objectReference: {fileID: 0}
-    - target: {fileID: 114247146229444510, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.39087084
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883028593777320, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.8773585
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883028593777320, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.13656996
-      objectReference: {fileID: 0}
-    - target: {fileID: 114883028593777320, guid: 7258d2e0985a58e408c46e8263effddb,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.13656996
-      objectReference: {fileID: 0}
-    - target: {fileID: 1529407667928124, guid: 7258d2e0985a58e408c46e8263effddb, type: 2}
+    - target: {fileID: 1657148844351650, guid: 7258d2e0985a58e408c46e8263effddb, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7258d2e0985a58e408c46e8263effddb, type: 2}
@@ -1764,7 +1710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c1dbb39c71e25f4b8c6a6ee00ca9ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpawnDelay: 0.3
+  _enemySpawnDelay: 0.5
   _enemySpawnPoint: {fileID: 1854429062}
   _enemyPrefabs:
   - {fileID: 114872560810126052, guid: 22707a43ca8683b47b098dd65005efe7, type: 2}
@@ -1772,11 +1718,11 @@ MonoBehaviour:
   _enemySpeed: 1000
   _enemyBoardingSpeed: 300
   _enemyOnBoardSpeed: 1000
-  _enemySpeedOffset: 50
+  _enemySpeedOffset: 60
   _projectileRoot: {fileID: 1681880246}
   _bulletPrefab: {fileID: 114029455337380778, guid: 1f5c8bdf0ef25484ca44a35bcac1f61f,
     type: 2}
-  _checkPointPath: 20
+  _checkPointPath: 60
   _platform: {fileID: 647566479}
   _workPlaces:
   - {fileID: 390315003}
@@ -1790,6 +1736,7 @@ MonoBehaviour:
   - {fileID: 635151055}
   _enableCollidersOnFly:
   - {fileID: 1970809631}
+  _startupItems: []
 --- !u!4 &359666942
 Transform:
   m_ObjectHideFlags: 0

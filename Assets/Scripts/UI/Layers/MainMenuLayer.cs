@@ -8,6 +8,12 @@ namespace UI.Layers
 {
     public class MainMenuLayer : LayerBase
     {
+        protected override void OnFloatUp()
+        {
+            base.OnFloatUp();
+            Game.GameController.Instance.NewGame();
+        }
+
         public void StartButtonClick()
         {
             LayersManager.Instance.FadeOut(0.5f, () =>
