@@ -86,5 +86,10 @@ namespace Game
         {
             
         }
+
+        public override void Initial()
+        {
+
+        }
     }
 }

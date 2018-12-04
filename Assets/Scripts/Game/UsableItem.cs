@@ -11,5 +11,6 @@ namespace Game
         public abstract void Use(Player player);
 
         public abstract void Refresh();
+        public abstract void Initial();
     }
 }

@@ -69,5 +69,25 @@ namespace Game
                         _boxPlaces[i].SetActive(i < _boxes.Count);
                 }
         }
+
+        public override void Initial()
+        {
+            foreach (var box in _boxes)
+                Destroy(box.gameObject);
+            _boxes.Clear();
+            foreach (var box in _boxPlaces)
+                box.SetActive(false);
+            for (int j = 0; j < 3; j++)
+                {
+                    var box = Instantiate(_boxPrefab, transform);
+                    box.gameObject.SetActive(false);
+                    box.transform.localPosition = Vector3.zero;
+                    box.transform.localRotation = Quaternion.identity;
+                    box.ToBack();
+                    _boxes.Add(box);
+                    for (int i = 0; i < _boxPlaces.Length; i++)
+                        _boxPlaces[i].SetActive(i < _boxes.Count);
+                }
+        }
     }
 }

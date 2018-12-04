@@ -103,7 +103,7 @@ namespace Game
                         _state = State.Boarding;
                         _rigidBody.AddForce(_boardingJumpPower * Vector2.up, ForceMode2D.Impulse);
                         DigitalRuby.Tween.TweenFactory.Tween(this, _offsetPoint.transform.localPosition, Vector3.zero, 0.2f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseInOut,
-                            p => _offsetPoint.transform.localPosition = p.CurrentValue, null);
+                            (p) => { if (_offsetPoint != null) _offsetPoint.transform.localPosition = p.CurrentValue; }, null);
                         _shadow.SetActive(false);
                         _animator.SetBool("walk", true);
                         break;

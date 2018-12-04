@@ -71,11 +71,21 @@ namespace Game
         {
             foreach (var en in _enemySpawnPoint.GetChilds<Enemy>().ToArray())
                 en.Free();
+            _started = false;
+            _currentPath = 0f;
             _nextCheckPointPath = _checkPointPath;
             _nextSpawnDelay = _enemySpawnDelay;
+            _platform.transform.position = Vector3.zero;
+            _platform.gameObject.SetActive(true);
             ShipHealth = 10;
             _shipAnimator.SetBool("fly", false);
             _shipAnimator.SetBool("die", false);
+            foreach (var item in _startupItems)
+                item.Initial();
+            foreach (var coll in _enableCollidersOnFly)
+                coll.enabled = false;
+            foreach (var coll in _disbleCollidersOnFly)
+                coll.enabled = true;
         }
 
         public bool StartGame()
@@ -97,9 +107,11 @@ namespace Game
 
         public void GameOver()
         {
-            StopCoroutine(_gameRoutine);
-            StopCoroutine(_spawnRoutine);
             StartCoroutine(DeathRoutine());
+            if (_gameRoutine != null)
+                StopCoroutine(_gameRoutine);
+            if (_spawnRoutine != null)
+                StopCoroutine(_spawnRoutine);
         }
 
         private IEnumerator DeathRoutine()

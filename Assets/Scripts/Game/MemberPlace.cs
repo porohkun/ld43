@@ -53,5 +53,15 @@ namespace Game
                 _member.transform.localPosition = Vector3.zero;
             }
         }
+
+        public override void Initial()
+        {
+            Destroy(_member.gameObject);
+            _member = null;
+            {
+                _member = Instantiate(_memberPrefabs.GetRandom(), _memberPlace);
+                _member.transform.localPosition = Vector3.zero;
+            }
+        }
     }
 }
