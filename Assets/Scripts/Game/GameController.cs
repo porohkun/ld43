@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI.Layers;
 using UnityEngine;
 
 namespace Game
@@ -68,6 +69,8 @@ namespace Game
 
         public void NewGame()
         {
+            foreach (var en in _enemySpawnPoint.GetChilds<Enemy>().ToArray())
+                en.Free();
             _nextCheckPointPath = _checkPointPath;
             _nextSpawnDelay = _enemySpawnDelay;
             ShipHealth = 10;
@@ -96,13 +99,18 @@ namespace Game
         {
             StopCoroutine(_gameRoutine);
             StopCoroutine(_spawnRoutine);
-            DigitalRuby.Tween.TweenFactory.Tween(this, TrainSpeed, 0f, 1f, DigitalRuby.Tween.TweenScaleFunctions.SineEaseOut,
-                (p) =>
-                {
-                    TrainSpeed = p.CurrentValue;
-                    _currentPath += TrainSpeed * Time.deltaTime;
-                }, null);
+            StartCoroutine(DeathRoutine());
+        }
 
+        private IEnumerator DeathRoutine()
+        {
+            while (TrainSpeed > 0f)
+            {
+                TrainSpeed -= Time.deltaTime / 12f;
+                _currentPath += TrainSpeed * Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            LayersManager.Instance.Push<GameOverLayer>();
         }
 
         private IEnumerator GameRoutine()
