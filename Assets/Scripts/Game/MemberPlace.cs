@@ -56,7 +56,8 @@ namespace Game
 
         public override void Initial()
         {
-            Destroy(_member.gameObject);
+            if (_member != null)
+                Destroy(_member.gameObject);
             _member = null;
             {
                 _member = Instantiate(_memberPrefabs.GetRandom(), _memberPlace);

@@ -42,6 +42,8 @@ namespace Game
         [SerializeField]
         private UsableItem[] _startupItems;
         [SerializeField]
+        private Player _player;
+        [SerializeField]
         private Animator _shipAnimator;
 
         public static Vector2 Size { get; private set; }
@@ -86,6 +88,7 @@ namespace Game
                 coll.enabled = false;
             foreach (var coll in _disbleCollidersOnFly)
                 coll.enabled = true;
+            _player.transform.position = Vector3.zero;
         }
 
         public bool StartGame()

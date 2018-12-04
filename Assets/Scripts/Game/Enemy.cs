@@ -130,6 +130,7 @@ namespace Game
 
         private void Death()
         {
+            _shadow.SetActive(false);
             if (_hitCoroutine != null)
                 StopCoroutine(_hitCoroutine);
             _rigidBody.freezeRotation = false;
